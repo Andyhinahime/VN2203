@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.SpuMapper">
+
+    <!--int insert(Spu spu);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            pms_spu (id, name, type_number, title, description, list_price, unit,
+             brand_id, brand_name, category_id, category_name, attribute_template_id,
+             album_id, pictures, keywords, tags,sales,comment_count, positive_comment_count,
+             sort,is_deleted,is_published,is_new_arrival,is_recommend,is_checked,check_user,
+             gmt_check, gmt_create, gmt_modified)
+        VALUES (#{id}, #{name}, #{typeNumber}, #{title}, #{description}, #{listPrice}, #{unit},
+             #{brandId}, #{brandName}, #{categoryId}, #{categoryName}, #{attributeTemplateId},
+             #{albumId}, #{pictures}, #{keywords}, #{tags} ,#{sales} ,#{commentCount}, #{positiveCommentCount},
+             #{sort}, #{isDeleted}, #{isPublished} ,#{isNewArrival} ,#{isRecommend} ,#{isChecked},#{checkUser},
+             #{gmtCheck}, #{gmtCreate}, #{gmtModified})
+        )
+    </insert>
+
+    <!-- int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM
+            pms_spu
+        WHERE
+            id = #{id}
+    </delete>
+    <!-- int deleteByIds(Long... ids);-->
+    <delete id="deleteByIds">
+        DELETE FROM
+            pms_spu
+        WHERE
+            id
+        IN(
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+        )
+    </delete>
+
+    <!--int updateById(Spu spu);-->
+    <update id="updateById">
+        UPDATE
+            pms_spu
+        <set>
+            <if test="name != null">
+            name = #{name},</if>
+            <if test="typeNumber != null">
+            type_number = #{typeNumber},</if>
+            <if test="title != null">
+            title = #{title},</if>
+            <if test="description != null">
+            description = #{description},</if>
+            <if test="listPrice != null">
+            list_price = #{listPrice},</if>
+            <if test="stock != null">
+            stock = #{stock},</if>
+            <if test="stockThreshold != null">
+            stock_threshold = #{stock_threshold},</if>
+            <if test="unit != null">
+            unit = #{unit},</if>
+            <if test="brandId != null">
+            brand_id = #{brandId},</if>
+            <if test="brandName != null">
+            brand_name = #{brandName},</if>
+            <if test="categoryId != null">
+            category_id = #{categoryId},</if>
+            <if test="categoryName != null">
+            category_name = #{categoryName},</if>
+            <if test="attributeTemplateId != null">
+            attribute_template_id = #{attributeTemplateId},</if>
+            <if test="albumId != null">
+            album_id = #{albumId},</if>
+            <if test="pictures != null">
+            pictures = #{pictures},</if>
+            <if test="keywords != null">
+            keywords = #{keywords},</if>
+            <if test="tags != null">
+            tags = #{tags},</if>
+            <if test="sales != null">
+            sales =#{sales},</if>
+            <if test="commentCount != null">
+            comment_count = #{commentCount},</if>
+            <if test="positiveCommentCount != null">
+            positive_comment_count= #{positiveCommentCount},</if>
+            <if test="sort != null">
+            sort = #{sort},</if>
+            <if test="isDeleted != null">
+            is_deleted = #{isDeleted},</if>
+            <if test="isPublished != null">
+            is_published = #{isPublished},</if>
+            <if test="isNewArrival != null">
+            is_new_arrival = #{isNewArrival},</if>
+            <if test="isRecommend != null">
+            is_recommend = #{isRecommend},</if>
+            <if test="isChecked != null">
+            is_checked = #{isChecked},</if>
+            <if test="checkUser != null">
+            check_user = #{checkUser},</if>
+            <if test="gmtCheck != null">
+            gmt_check = #{gmtCheck},</if>
+            <if test="gmtCreate != null">
+            gmt_create = #{gmtCreate},</if>
+            <if test="gmtModified != null">
+            gmt_modified = #{gmtModified},</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!--int count();-->
+    <select id="count" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            pms_spu
+    </select>
+</mapper>

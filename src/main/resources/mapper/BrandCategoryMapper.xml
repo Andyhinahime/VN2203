@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.BrandCategoryMapper">
+    <!-- int insert(BrandCategory brandCategory);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            pms_brand_category(brand_id, category_id, gmt_create, gmt_modified)
+        VALUES
+            (#{brandId}, #{categoryId}, #{gmtCreate}, #{gmtModified})
+    </insert>
+
+    <!-- int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM
+             pms_brand_category
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!--int deleteByIds(Long... ids);-->
+    <delete id="deleteByIds">
+        DELETE FROM
+            pms_brand_category
+        WHERE
+            id
+        IN(
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+        )
+    </delete>
+
+
+
+    <!--int updateById(BrandCategory brandCategory);-->
+    <update id="updateById">
+        UPDATE
+            pms_brand_category
+        <set>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified =#{gmtModified}
+            </if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- int count();-->
+    <select id="count" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            pms_brand_category
+    </select>
+
+    <!-- List<BrandCategoryListItemVO> list();-->
+    <select id="list" resultMap="ListItemResultMap">
+        SELECT
+            <include refid="ListItemQueryFields"></include>
+        FROM
+            pms_brand_category
+        ORDER BY
+            id
+    </select>
+    <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandCategoryListItemVO">
+        <result column="brand_id" property="brandId"></result>
+        <result column="category_id" property="categoryId"></result>
+    </resultMap>
+    <sql id="ListItemQueryFields">
+       id, brand_id, category_id
+    </sql>
+</mapper>

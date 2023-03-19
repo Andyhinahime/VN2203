@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.PictureMapper">
+    <!--int insert(Picture picture);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            pms_picture(album_id, url, description, width, height, is_cover, sort, gmt_create, gmt_modified)
+        VALUES
+            (#{albumId}, #{url}, #{description}, #{width}, #{height}, #{isCover}, #{sort}, #{gmtCreate}, #{gmtModified})
+    </insert>
+
+    <!--int deleteById(Long id);-->
+    <delete id="deleteById">
+        DELETE FROM
+            pms_picture
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!--int deleteByIds(Long... ids);-->
+    <delete id="deleteByIds">
+        DELETE FROM
+            pms_picture
+        WHERE
+            id
+        IN(
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+        )
+    </delete>
+
+    <!--int updateById(Picture picture);-->
+    <update id="updateById">
+        UPDATE
+             pms_picture
+        <set>
+            <if test="albumId != null">
+                album_id = #{albumId},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="width != null">
+                width = #{width},
+            </if>
+            <if test="height != null">
+                height = #{height},
+            </if>
+            <if test="isCover!= null">
+                is_cover = #{isCover},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified}
+            </if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- int count();-->
+    <select id="count" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            pms_picture
+    </select>
+
+    <!-- PictureDetailVO getById(Long id);-->
+    <select id="getById" resultMap="detailResultMap">
+        SELECT
+            id, album_id, url, description, width, height, is_cover, sort
+        FROM
+            pms_picture
+        WHERE
+            id = #{id}
+    </select>
+    <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.PictureDetailVO">
+        <result column="album_id" property="albumId"></result>
+        <result column="is_cover" property="isCover"></result>
+    </resultMap>
+
+    <!-- List<PictureListItemVO> list();-->
+    <select id="list" resultMap="ListItemResultMap">
+         SELECT
+            id, album_id, url, description, width, height, is_cover, sort
+        FROM
+            pms_picture
+        ORDER BY
+            id
+    </select>
+    <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.PictureListItemVO">
+        <result column="album_id" property="albumId"></result>
+        <result column="is_cover" property="isCover"></result>
+    </resultMap>
+
+
+
+
+
+</mapper>
